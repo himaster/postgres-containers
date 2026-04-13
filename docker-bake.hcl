@@ -39,12 +39,14 @@ postgreSQLPreviewVersions = [
 // renovate: datasource=pypi versioning=loose depName=barman
 barmanVersion = "3.17.0"
 
+// pg_partman: PGDG ships 5.x for new majors; pin upstream release via Git (PGXS). Empty string skips install.
+pgPartmanVersion = "4.7.4"
+
 // Extensions to be included in the `standard` image
 extensions = [
   "pgaudit",
   "pgvector",
   "pg-failover-slots",
-  "partman",
   "repack"
 ]
 
@@ -86,6 +88,7 @@ target "default" {
     EXTENSIONS = "${getExtensionsString(pgVersion, extensions)}"
     STANDARD_ADDITIONAL_POSTGRES_PACKAGES = "${getStandardAdditionalPostgresPackagesPerMajorVersion(getMajor(pgVersion))}"
     BARMAN_VERSION = "${barmanVersion}"
+    PG_PARTMAN_VERSION = "${pgPartmanVersion}"
   }
   attest = [
     "type=provenance,mode=max",

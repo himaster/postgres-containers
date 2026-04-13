@@ -102,7 +102,7 @@ following additional features:
 - PGAudit
 - Postgres Failover Slots
 - pgvector
-- pg_partman
+- pg_partman (built from a pinned Git tag via `pgPartmanVersion` in `docker-bake.hcl`, not the PGDG package)
 - pg_repack
 - All Locales
 - LLVM JIT support

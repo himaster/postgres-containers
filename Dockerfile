@@ -22,11 +22,36 @@ USER 26
 
 
 FROM minimal AS standard
+ARG PG_MAJOR
+ARG PG_VERSION
+ARG PG_PARTMAN_VERSION
 ARG EXTENSIONS
 ARG STANDARD_ADDITIONAL_POSTGRES_PACKAGES
 USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends locales-all ${STANDARD_ADDITIONAL_POSTGRES_PACKAGES} ${EXTENSIONS} && \
+    if [ -n "${PG_PARTMAN_VERSION}" ]; then \
+      apt-get install -y --no-install-recommends \
+        "postgresql-server-dev-${PG_MAJOR}=${PG_VERSION}*" \
+        build-essential \
+        git \
+        ca-certificates \
+      && \
+      git clone --branch "v${PG_PARTMAN_VERSION}" --depth 1 https://github.com/pgpartman/pg_partman.git /tmp/pg_partman \
+      && \
+      make -C /tmp/pg_partman PG_CONFIG="/usr/lib/postgresql/${PG_MAJOR}/bin/pg_config" \
+      && \
+      make -C /tmp/pg_partman PG_CONFIG="/usr/lib/postgresql/${PG_MAJOR}/bin/pg_config" install \
+      && \
+      rm -rf /tmp/pg_partman \
+      && \
+      apt-get remove -y --purge \
+        "postgresql-server-dev-${PG_MAJOR}" \
+        build-essential \
+        git \
+      && \
+      apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    fi && \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
     rm -rf /var/lib/apt/lists/* /var/cache/* /var/log/*
 
