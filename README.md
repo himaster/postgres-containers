@@ -102,6 +102,8 @@ following additional features:
 - PGAudit
 - Postgres Failover Slots
 - pgvector
+- pg_partman
+- pg_repack
 - All Locales
 - LLVM JIT support
   - For PostgreSQL 17 and earlier: included in the main PostgreSQL packages,
@@ -278,6 +280,12 @@ Postgres Failover Slots is distributed by EnterpriseDB under the
 
 pgvector is distributed under the
 [PostgreSQL License](https://github.com/pgvector/pgvector/blob/master/LICENSE).
+
+pg_partman is distributed under the
+[PostgreSQL License](https://github.com/pgpartman/pg_partman/blob/master/LICENSE).
+
+pg_repack is distributed under the
+[BSD 3-Clause License](https://github.com/reorg/pg_repack/blob/master/COPYRIGHT).
 
 ## Trademarks
 

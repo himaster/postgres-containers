@@ -43,7 +43,9 @@ barmanVersion = "3.17.0"
 extensions = [
   "pgaudit",
   "pgvector",
-  "pg-failover-slots"
+  "pg-failover-slots",
+  "partman",
+  "repack"
 ]
 
 target "default" {
